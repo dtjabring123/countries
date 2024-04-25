@@ -47,7 +47,7 @@
   <div class="container responsive-grid">
     <mat-card
       *ngFor="let country of observableCountries | async"
-      (click)="onCardClick(country.name.common)"
+      (click)="onCardClick(country)"
     >
       <mat-card-header>
         <img

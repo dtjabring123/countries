@@ -24,6 +24,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { CountryPageComponent } from '../../components';
 
 @Component({
   selector: 'app-countries-page',
@@ -78,7 +80,7 @@ export class CountriesPageComponent {
     'subregion',
   ];
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, public dialog: MatDialog) {
     this.filterValue = '';
     this.endpointValue = this.endpointOptions[0];
   }
@@ -135,7 +137,12 @@ export class CountriesPageComponent {
     this.getData();
   }
 
-  protected onCardClick(countryName: string) {
-    console.log(countryName);
+  protected onCardClick(country: any) {
+    console.log(country.name.common);
+    this.dialog.open(CountryPageComponent, {
+      width: '600px',
+      height: '500px',
+      data: country,
+    });
   }
 }
