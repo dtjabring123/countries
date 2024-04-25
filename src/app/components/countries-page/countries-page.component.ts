@@ -1,11 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, viewChild } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ApiService } from '../../services';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {
+  fromEvent,
+  map,
+  debounceTime,
+  distinctUntilChanged,
+  Observable,
+} from 'rxjs';
+import { MatSelectModule } from '@angular/material/select';
+import { ApiEnum, FieldEnum } from '../../enums';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-countries-page',
@@ -16,16 +34,108 @@ import { NgModule } from '@angular/core';
     MatCardModule,
     MatChipsModule,
     MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    FormsModule,
+    MatPaginator,
+    MatSort,
+    MatTableModule,
+    MatSortModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './countries-page.component.html',
   styleUrl: './countries-page.component.scss',
 })
 export class CountriesPageComponent {
   protected countries: any[] | undefined;
+  @ViewChild('filter') filterInput!: ElementRef;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  protected dataSource!: MatTableDataSource<any>;
+  protected observableCountries!: Observable<any>;
+  protected filterValue: string;
+  protected endpointValue: string;
 
-  constructor(private apiService: ApiService) {}
+  protected endpointOptions = [
+    ApiEnum.name,
+    ApiEnum.code,
+    ApiEnum.currency,
+    ApiEnum.demonym,
+    ApiEnum.language,
+    ApiEnum.capital,
+    ApiEnum.region,
+    ApiEnum.subregion,
+    ApiEnum.translation,
+    ApiEnum.independent,
+  ];
+  protected displayedColumns: string[] = [
+    'area',
+    'name',
+    'population',
+    'region',
+    'subregion',
+  ];
+
+  constructor(private apiService: ApiService) {
+    this.filterValue = '';
+    this.endpointValue = this.endpointOptions[0];
+  }
 
   ngOnInit() {
-    this.apiService.getAll().subscribe((result) => (this.countries = result));
+    this.dataSource = new MatTableDataSource();
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case FieldEnum.name:
+          return item.name.common;
+        default:
+          return item[property];
+      }
+    };
+    this.getData();
+  }
+
+  ngAfterViewInit() {
+    const key = 'keyup';
+    fromEvent(this.filterInput.nativeElement, key)
+      .pipe(
+        map((event: any) => event.target.value),
+        debounceTime(500),
+        distinctUntilChanged()
+      )
+      .subscribe((res) => {
+        this.filterValue = res;
+        this.getData();
+      });
+  }
+
+  private getData() {
+    console.log(this.endpointValue, this.filterValue);
+    this.apiService.setUrl(this.endpointValue, this.filterValue);
+    this.apiService
+      .getAll()
+      .subscribe((result) => this.populateDataSource(result));
+  }
+
+  private populateDataSource(data: any) {
+    this.dataSource.data = data;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.observableCountries = this.dataSource.connect();
+  }
+
+  protected onClearFilter() {
+    this.filterValue = '';
+    this.getData();
+  }
+
+  protected onOptionSelected(endpointValue: string) {
+    this.endpointValue = endpointValue;
+    this.getData();
+  }
+
+  protected onCardClick(countryName: string) {
+    console.log(countryName);
   }
 }

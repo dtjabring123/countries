@@ -1,6 +1,54 @@
 <main>
   <div class="container responsive-grid">
-    <mat-card *ngFor="let country of countries">
+    <mat-form-field class="filter">
+      <mat-label> Filter </mat-label>
+      <input matInput #filter [(ngModel)]="filterValue" />
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="onClearFilter()"
+        [hidden]="filterValue == ''"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="filter">
+      <mat-select
+        [(ngModel)]="endpointValue"
+        (selectionChange)="onOptionSelected(endpointValue)"
+      >
+        <mat-option *ngFor="let option of endpointOptions" [value]="option"
+          >{{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div *ngIf="dataSource">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="area">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>total area</th>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>name</th>
+      </ng-container>
+      <ng-container matColumnDef="population">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>population</th>
+      </ng-container>
+      <ng-container matColumnDef="region">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>region</th>
+      </ng-container>
+      <ng-container matColumnDef="subregion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>subregion</th>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    </table>
+  </div>
+  <div class="container responsive-grid">
+    <mat-card
+      *ngFor="let country of observableCountries | async"
+      (click)="onCardClick(country.name.common)"
+    >
       <mat-card-header>
         <img
           mat-card-avatar
@@ -22,17 +70,28 @@
       />
       <mat-card-content>
         <mat-chip-set>
-          <mat-chip *ngIf="country.region" title="country region">
+          <mat-chip *ngIf="country.region" title="region">
             {{ country.region }}
           </mat-chip>
-          <mat-chip *ngIf="country.subregion" title="country subregion">
+          <mat-chip *ngIf="country.subregion" title="subregion">
             {{ country.subregion }}
           </mat-chip>
-          <mat-chip *ngFor="let currency of country.currency">
-            {{ currency }}
+          <mat-chip *ngIf="country.area" title="geographical area">
+            {{ country.area }} km<sup>2</sup>
+          </mat-chip>
+          <mat-chip *ngIf="country.population" title="population">
+            {{ country.population }} people
+          </mat-chip>
+          <mat-chip *ngIf="country.demonyms.eng.m" title="demonym">
+            {{ country.demonyms.eng.m }}
           </mat-chip>
         </mat-chip-set>
       </mat-card-content>
     </mat-card>
   </div>
+  <mat-paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons
+  ></mat-paginator>
 </main>
