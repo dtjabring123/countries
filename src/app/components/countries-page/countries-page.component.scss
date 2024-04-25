@@ -1,0 +1,17 @@
+.container {
+  padding: 24px;
+}
+
+.profile-img {
+  background-size: cover;
+}
+
+.img {
+  object-fit: fill;
+}
+
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+}

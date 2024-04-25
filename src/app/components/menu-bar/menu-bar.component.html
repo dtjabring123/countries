@@ -1,0 +1,17 @@
+<main>
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+    <a
+      mat-tab-link
+      routerLink="{{ landingRoute }}"
+      [routerLinkActive]="['active']"
+      >Landing Page</a
+    >
+    <a
+      mat-tab-link
+      routerLink="{{ countriesRoute }}"
+      [routerLinkActive]="['active']"
+      >Countries</a
+    >
+  </nav>
+  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+</main>

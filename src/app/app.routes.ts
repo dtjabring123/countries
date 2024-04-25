@@ -1,15 +1,20 @@
 import { Routes } from '@angular/router';
 import { CountriesPageComponent, LandingPageComponent } from './components';
+import { RouteConstants } from './constants';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/landing-page', pathMatch: 'full' },
   {
-    path: 'landing-page',
+    path: '',
+    redirectTo: `/${RouteConstants.LANDING_PAGE}`,
+    pathMatch: 'full',
+  },
+  {
+    path: `${RouteConstants.LANDING_PAGE}`,
     title: 'landing-page',
     component: LandingPageComponent,
   },
   {
-    path: 'countries-page',
+    path: `${RouteConstants.COUNTRIES_PAGE}`,
     title: 'countries-page',
     component: CountriesPageComponent,
   },

@@ -1,1 +1,38 @@
-<p>countries-page works!</p>
+<main>
+  <div class="container responsive-grid">
+    <mat-card *ngFor="let country of countries">
+      <mat-card-header>
+        <img
+          mat-card-avatar
+          src="{{ country.coatOfArms.svg }}"
+          *ngIf="country.coatOfArms.svg"
+        />
+        <mat-card-title *ngIf="country.name.common">
+          {{ country.name.common }}
+        </mat-card-title>
+        <mat-card-subtitle *ngFor="let capital of country.capital">
+          {{ capital }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <img
+        mat-card-image
+        src="{{ country.flags.svg }}"
+        *ngIf="country.flags.svg"
+        class="img"
+      />
+      <mat-card-content>
+        <mat-chip-set>
+          <mat-chip *ngIf="country.region" title="country region">
+            {{ country.region }}
+          </mat-chip>
+          <mat-chip *ngIf="country.subregion" title="country subregion">
+            {{ country.subregion }}
+          </mat-chip>
+          <mat-chip *ngFor="let currency of country.currency">
+            {{ currency }}
+          </mat-chip>
+        </mat-chip-set>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</main>

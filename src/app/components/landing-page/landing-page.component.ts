@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CountriesService } from '../../services';
+import { ApiService } from '../../services';
 
 @Component({
   selector: 'app-landing-page',
@@ -8,12 +8,4 @@ import { CountriesService } from '../../services';
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
 })
-export class LandingPageComponent {
-  constructor(private countriesService: CountriesService) {}
-
-  ngOnInit() {
-    this.countriesService
-      .getAll()
-      .subscribe((result) => console.log(result[0]));
-  }
-}
+export class LandingPageComponent {}
