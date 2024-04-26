@@ -1,19 +1,17 @@
-<main>
-  <div>
-    <a mat-icon-button class="back-button" (click)="onBackClick()">
-      <mat-icon>arrow_back</mat-icon>
-    </a>
-    <a class="home-button" mat-icon-button routerLink="{{ landingRoute }}">
-      <mat-icon>home </mat-icon>
-    </a>
-  </div>
-  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
-    <a
-      mat-tab-link
-      routerLink="{{ countriesRoute }}"
-      [routerLinkActive]="['active']"
-      >Countries</a
-    >
-  </nav>
-  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-</main>
+<mat-toolbar>
+  <button
+    mat-icon-button
+    class="example-icon mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"
+    (click)="onBackClick()"
+  >
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span class="spacer"></span>
+  <button
+    mat-icon-button
+    class="example-icon mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base home-button"
+    routerLink="{{ landingRoute }}"
+  >
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+</mat-toolbar>

@@ -6,6 +6,7 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { Location } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 export interface ExampleTab {
   label: string;
@@ -22,6 +23,7 @@ export interface ExampleTab {
     RouterModule,
     MatIcon,
     MatIconModule,
+    MatToolbarModule,
   ],
   templateUrl: './menu-bar.component.html',
   styleUrl: './menu-bar.component.scss',
