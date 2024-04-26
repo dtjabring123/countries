@@ -1,88 +1,68 @@
 <main>
-  <mat-card
-    style="
-      background-image: url({{ country.coatOfArms.svg }});
-      background-size: cover;
-    "
-  >
-    <mat-card-header>
-      <mat-card-title *ngIf="country.name.common">
-        {{ country.name.common }}
-      </mat-card-title>
-      <mat-card-subtitle *ngFor="let capital of country.capital">
-        {{ capital }}
-      </mat-card-subtitle>
-      <mat-card-subtitle>
-        <mat-chip-set>
-          <mat-chip *ngIf="country.region" title="region">
-            {{ country.region }}
-          </mat-chip>
-          <mat-chip *ngIf="country.subregion" title="subregion">
-            {{ country.subregion }}
-          </mat-chip>
-          <mat-chip *ngIf="country.area" title="geographical area">
-            {{ country.area }} km<sup>2</sup>
-          </mat-chip>
-          <mat-chip *ngIf="country.population" title="population">
-            {{ country.population }} people
-          </mat-chip>
-          <mat-chip *ngIf="country.demonyms" title="demonym">
-            {{ country.demonyms.eng.m }}
-          </mat-chip>
-        </mat-chip-set>
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <a
-        class="button"
-        matSuffix
-        mat-icon-button
-        href="{{ country.maps.googleMaps }}"
-        target="_blank"
-      >
-        <mat-icon> map</mat-icon>
+  <div class="container">
+    <img
+      class="img"
+      src="{{ country.coatOfArms.svg }}"
+      *ngIf="country.coatOfArms.svg"
+    />
+    <h1 *ngIf="country.name.common">
+      <b>{{ country.name.common }}</b>
+      <a mat-icon-button href="{{ country.maps.googleMaps }}" target="_blank">
+        <mat-icon>map</mat-icon>
       </a>
-      <button class="button" *ngIf="country.car.side">
-        They drive on the {{ country.car.side }} of the road
-      </button>
-      <button class="button" *ngIf="country.fifa">
-        They are known as the {{ country.fifa }} in FIFA
-      </button>
-      <button class="button" *ngIf="country.idd.root">
-        Their IDD root is {{ country.idd.root }}
-      </button>
-      <button class="button" *ngIf="country.independent">
-        They are independent
-      </button>
-      <button class="button" *ngIf="!country.independent">
-        They are not independent
-      </button>
-      <button class="button" *ngIf="country.landlocked">
-        They are landlocked
-      </button>
-      <button class="button" *ngIf="!country.landlocked">
-        They are not landlocked
-      </button>
-
-      <button class="button" *ngIf="country.startOfWeek">
-        They start their weeks on {{ country.startOfWeek }}
-      </button>
-      <button class="button" *ngIf="country.tld">
-        Their top level internet domain is {{ country.tld[0] }}
-      </button>
-      <button class="button" *ngIf="country.unMember">
-        They are a member of the United Nations
-      </button>
-      <button class="button" *ngIf="!country.unMember">
-        They are not a member of the United Nations
-      </button>
-      <button class="button" *ngIf="country.latlng">
+    </h1>
+    <h2 *ngFor="let capital of country.capital">
+      <b>{{ capital }} {{ country.flag }}</b>
+    </h2>
+    <h3>
+      <div *ngIf="country.region"><b>Region:</b> {{ country.region }}</div>
+      <div *ngIf="country.subregion">
+        <b>Subregion:</b> {{ country.subregion }}
+      </div>
+      <div *ngIf="country.area">
+        <b>Geographical Area:</b> {{ country.area }} km<sup>2</sup>
+      </div>
+      <div *ngIf="country.population">
+        <b>Population:</b> {{ country.population }} people
+      </div>
+      <div *ngIf="country.demonyms">
+        <b>Demonyms:</b> {{ country.demonyms.eng.m }}
+      </div>
+    </h3>
+    <h4>
+      <span *ngIf="country.car.side">
+        They drive on the {{ country.car.side }} of the road.
+      </span>
+      <span *ngIf="country.fifa">
+        They are known as the {{ country.fifa }} in FIFA.
+      </span>
+      <span *ngIf="country.idd.root"
+        >Their IDD root is {{ country.idd.root }}.
+      </span>
+      <span *ngIf="country.independent">They are independent. </span>
+      <span *ngIf="!country.independent">They are not independent. </span>
+      <span *ngIf="country.landlocked">They are landlocked. </span>
+      <span *ngIf="!country.landlocked">They are not landlocked. </span>
+      <span *ngIf="country.startOfWeek">
+        They start their weeks on {{ country.startOfWeek }}.
+      </span>
+      <span *ngIf="country.tld">
+        Their top level internet domain is '{{ country.tld[0] }}'.
+      </span>
+      <span *ngIf="country.unMember"
+        >They are a member of the United Nations.
+      </span>
+      <span *ngIf="!country.unMember">
+        They are not a member of the United Nations.
+      </span>
+      <span *ngIf="country.latlng">
         Their latitude is {{ country.latlng[0] }}&deg;, and their longitude is
-        {{ country.latlng[1] }}&deg;
-      </button>
-      <button class="button" *ngIf="country.flags">
-        {{ country.flag }}{{ country.flags.alt }}{{ country.flag }}
-      </button>
-    </mat-card-content>
-  </mat-card>
+        {{ country.latlng[1] }}&deg;.
+      </span>
+      <span *ngIf="country.flags">
+        {{ country.flags.alt }}
+      </span>
+    </h4>
+    <img src="{{ country.flags.svg }}" *ngIf="country.flags.svg" class="flag" />
+  </div>
 </main>

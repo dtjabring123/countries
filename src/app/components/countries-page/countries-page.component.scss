@@ -8,10 +8,30 @@
 
 .img {
   object-fit: fill;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .responsive-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 24px;
+  vertical-align: center;
+}
+
+.grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  display: flex;
+  align-items: center;
+}
+
+.search {
+  width: 100%;
+}
+
+.picker {
+  width: 50%;
 }

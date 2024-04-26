@@ -1,16 +1,19 @@
-button {
-  padding: 7px 12px;
-  border-radius: 16px;
-  min-height: 32px;
-  background-color: #e0e0e0;
-  color: rgba(0, 0, 0, 0.87);
-  box-shadow: none;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  display: block;
+.container {
+  padding: 24px;
+  position: relative;
 }
 
-button:focus {
-  outline: none;
+.img {
+  object-fit: fill;
+  display: block;
+  float: right;
+  top: 24px;
+  width: 25%;
+  height: 25%;
+}
+
+.flag {
+  object-fit: fill;
+  width: 100%;
+  height: 100%;
 }

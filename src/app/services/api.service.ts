@@ -15,7 +15,7 @@ export class ApiService {
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
-  public getAll(): Observable<any[]> {
+  public getCountries(): Observable<any[]> {
     let url = '';
     if (this.filterUrl === '') {
       url = `${this.baseUrl}/${ApiEnum.all}`;
@@ -30,15 +30,23 @@ export class ApiService {
         },
         error: (err) => {
           console.error(`get all failed ${err}`);
-          this.snackBar.open(
-            `No ${this.endpointUrl} matching your search of '${this.filterUrl}'`,
-            'close',
-            {
-              duration: 3000,
-              verticalPosition: 'top',
-              panelClass: 'error-snackbar',
-            }
-          );
+          this.showSnackBar();
+        },
+      })
+    );
+  }
+
+  public getCountry(countryCca3: string): Observable<any> {
+    const url = `${this.baseUrl}/${ApiEnum.code}/${countryCca3}`;
+    console.log(url);
+    return this.http.get<any>(url).pipe(
+      tap({
+        next: (_) => {
+          console.log(`get success`);
+        },
+        error: (err) => {
+          console.error(`get failed ${err}`);
+          this.showSnackBar();
         },
       })
     );
@@ -47,5 +55,17 @@ export class ApiService {
   public setUrl(endpoint: string, filter: string) {
     this.endpointUrl = endpoint;
     this.filterUrl = filter;
+  }
+
+  public showSnackBar() {
+    this.snackBar.open(
+      `No ${this.endpointUrl} matching your search of '${this.filterUrl}'`,
+      'close',
+      {
+        duration: 3000,
+        verticalPosition: 'top',
+        panelClass: 'error-snackbar',
+      }
+    );
   }
 }

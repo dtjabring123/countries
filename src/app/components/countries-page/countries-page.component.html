@@ -1,6 +1,17 @@
 <main>
-  <div class="container responsive-grid">
-    <mat-form-field class="filter">
+  <div class="container grid">
+    <mat-form-field class="picker">
+      <mat-select
+        [(ngModel)]="endpointValue"
+        (selectionChange)="onOptionSelected(endpointValue)"
+      >
+        <mat-option *ngFor="let option of endpointOptions" [value]="option"
+          >{{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="search">
       <mat-label> Filter </mat-label>
       <input matInput #filter [(ngModel)]="filterValue" />
       <button
@@ -13,16 +24,12 @@
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
-    <mat-form-field class="filter">
-      <mat-select
-        [(ngModel)]="endpointValue"
-        (selectionChange)="onOptionSelected(endpointValue)"
-      >
-        <mat-option *ngFor="let option of endpointOptions" [value]="option"
-          >{{ option }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <a
+      mat-icon-button
+      matTooltip="you can click on fields like 'total area' or 'subregion' to sort by them"
+    >
+      <mat-icon>info_outline</mat-icon>
+    </a>
   </div>
   <div *ngIf="dataSource">
     <table mat-table [dataSource]="dataSource" matSort>
@@ -47,13 +54,18 @@
   <div class="container responsive-grid">
     <mat-card
       *ngFor="let country of observableCountries | async"
-      (click)="onCardClick(country)"
+      (click)="onCardClick(country.cca3)"
     >
       <mat-card-header>
         <img
           mat-card-avatar
           src="{{ country.coatOfArms.svg }}"
           *ngIf="country.coatOfArms.svg"
+        />
+        <img
+          mat-card-avatar
+          src="../../../assets/images/blank_coat.png"
+          *ngIf="!country.coatOfArms.svg"
         />
         <mat-card-title *ngIf="country.name.common">
           {{ country.name.common }}
@@ -62,30 +74,29 @@
           {{ capital }}
         </mat-card-subtitle>
       </mat-card-header>
-      <img
-        mat-card-image
-        src="{{ country.flags.svg }}"
-        *ngIf="country.flags.svg"
-        class="img"
-      />
+
       <mat-card-content>
-        <mat-chip-set>
-          <mat-chip *ngIf="country.region" title="region">
-            {{ country.region }}
-          </mat-chip>
-          <mat-chip *ngIf="country.subregion" title="subregion">
-            {{ country.subregion }}
-          </mat-chip>
-          <mat-chip *ngIf="country.area" title="geographical area">
-            {{ country.area }} km<sup>2</sup>
-          </mat-chip>
-          <mat-chip *ngIf="country.population" title="population">
-            {{ country.population }} people
-          </mat-chip>
-          <mat-chip *ngIf="country.demonyms" title="demonym">
-            {{ country.demonyms.eng.m }}
-          </mat-chip>
-        </mat-chip-set>
+        <div *ngIf="country.region"><b>Region:</b> {{ country.region }}</div>
+        <div *ngIf="country.subregion">
+          <b>Subregion:</b> {{ country.subregion }}
+        </div>
+        <div *ngIf="country.area">
+          <b>Geographical Area:</b> {{ country.area }} km<sup>2</sup>
+        </div>
+        <div *ngIf="country.population">
+          <b>Population:</b> {{ country.population }} people
+        </div>
+        <div *ngIf="country.demonyms">
+          <b>Demonyms:</b> {{ country.demonyms.eng.m }}
+        </div>
+        <div>
+          <img
+            mat-card-image
+            src="{{ country.flags.svg }}"
+            *ngIf="country.flags.svg"
+            class="img"
+          />
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

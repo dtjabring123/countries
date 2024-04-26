@@ -1,11 +1,13 @@
 <main>
+  <div>
+    <a mat-icon-button class="back-button" (click)="onBackClick()">
+      <mat-icon>arrow_back</mat-icon>
+    </a>
+    <a class="home-button" mat-icon-button routerLink="{{ landingRoute }}">
+      <mat-icon>home </mat-icon>
+    </a>
+  </div>
   <nav mat-tab-nav-bar [tabPanel]="tabPanel">
-    <a
-      mat-tab-link
-      routerLink="{{ landingRoute }}"
-      [routerLinkActive]="['active']"
-      >Landing Page</a
-    >
     <a
       mat-tab-link
       routerLink="{{ countriesRoute }}"

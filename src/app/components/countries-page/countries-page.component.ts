@@ -24,8 +24,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
-import { CountryPageComponent } from '../../components';
+import { Router } from '@angular/router';
+import { RouteConstants, RouteParameterConstants } from '../../constants';
 
 @Component({
   selector: 'app-countries-page',
@@ -51,7 +51,6 @@ import { CountryPageComponent } from '../../components';
   styleUrl: './countries-page.component.scss',
 })
 export class CountriesPageComponent {
-  protected countries: any[] | undefined;
   @ViewChild('filter') filterInput!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -70,7 +69,6 @@ export class CountriesPageComponent {
     ApiEnum.region,
     ApiEnum.subregion,
     ApiEnum.translation,
-    ApiEnum.independent,
   ];
   protected displayedColumns: string[] = [
     'area',
@@ -80,7 +78,7 @@ export class CountriesPageComponent {
     'subregion',
   ];
 
-  constructor(private apiService: ApiService, public dialog: MatDialog) {
+  constructor(private apiService: ApiService, private router: Router) {
     this.filterValue = '';
     this.endpointValue = this.endpointOptions[0];
   }
@@ -116,7 +114,7 @@ export class CountriesPageComponent {
     console.log(this.endpointValue, this.filterValue);
     this.apiService.setUrl(this.endpointValue, this.filterValue);
     this.apiService
-      .getAll()
+      .getCountries()
       .subscribe((result) => this.populateDataSource(result));
   }
 
@@ -137,12 +135,7 @@ export class CountriesPageComponent {
     this.getData();
   }
 
-  protected onCardClick(country: any) {
-    console.log(country.name.common);
-    this.dialog.open(CountryPageComponent, {
-      width: '600px',
-      height: '500px',
-      data: country,
-    });
+  protected onCardClick(countryCca3: string) {
+    this.router.navigate([`${RouteConstants.COUNTRY_PAGE}/${countryCca3}`]);
   }
 }

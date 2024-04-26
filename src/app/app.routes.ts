@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
-import { CountriesPageComponent, LandingPageComponent } from './components';
-import { RouteConstants } from './constants';
+import {
+  CountriesPageComponent,
+  LandingPageComponent,
+  CountryPageComponent,
+} from './components';
+import { RouteConstants, RouteParameterConstants } from './constants';
 
 export const routes: Routes = [
   {
@@ -17,5 +21,10 @@ export const routes: Routes = [
     path: `${RouteConstants.COUNTRIES_PAGE}`,
     title: 'countries-page',
     component: CountriesPageComponent,
+  },
+  {
+    path: `${RouteConstants.COUNTRY_PAGE}/:${RouteParameterConstants.CCA3}`,
+    title: 'countries-page',
+    component: CountryPageComponent,
   },
 ];
