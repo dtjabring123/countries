@@ -38,6 +38,8 @@ export class LandingPageComponent {
   }
 
   protected onLoginClick() {
-    this.router.navigate([`${RouteConstants.COUNTRIES_PAGE}`]);
+    if (this.username === 'qwe' && this.password === 'qwe') {
+      this.router.navigate([`${RouteConstants.COUNTRIES_PAGE}`]);
+    }
   }
 }
