@@ -71,11 +71,11 @@ export class CountriesPageComponent {
     ApiEnum.translation,
   ];
   protected displayedColumns: string[] = [
-    'area',
-    'name',
-    'population',
-    'region',
-    'subregion',
+    FieldEnum.area,
+    FieldEnum.name,
+    FieldEnum.population,
+    FieldEnum.region,
+    FieldEnum.subregion,
   ];
 
   constructor(private apiService: ApiService, private router: Router) {

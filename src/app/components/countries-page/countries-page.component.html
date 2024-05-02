@@ -32,7 +32,13 @@
     </a>
   </div>
   <div *ngIf="dataSource">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      matSortActive="name"
+      matSortDirection="asc"
+    >
       <ng-container matColumnDef="area">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>total area</th>
       </ng-container>
