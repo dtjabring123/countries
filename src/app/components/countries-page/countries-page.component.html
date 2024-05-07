@@ -40,16 +40,16 @@
       matSortDirection="asc"
     >
       <ng-container matColumnDef="area">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>total area</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Area</th>
       </ng-container>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>name</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
       </ng-container>
       <ng-container matColumnDef="population">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>population</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Population</th>
       </ng-container>
       <ng-container matColumnDef="region">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>region</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Region</th>
       </ng-container>
       <ng-container matColumnDef="subregion">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>subregion</th>
@@ -91,9 +91,6 @@
         </div>
         <div *ngIf="country.population">
           <b>Population:</b> {{ country.population }} people
-        </div>
-        <div *ngIf="country.demonyms">
-          <b>Demonyms:</b> {{ country.demonyms.eng.m }}
         </div>
         <div>
           <img
